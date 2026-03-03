@@ -157,7 +157,12 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav
             className="cv-desk"
-            style={{ display: "flex", alignItems: "center", gap: "2px" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "2px",
+              borderRadius: "980px",
+            }}
           >
             {links.map(({ label, href }) => (
               <NavLink key={href} href={href} active={path === href}>
@@ -324,8 +329,8 @@ function NavLink({ href, active, children }) {
         textDecoration: "none",
         display: "inline-flex",
         alignItems: "center",
-        padding: "6px 13px",
-        borderRadius: "8px",
+        padding: "8px 16px",
+        borderRadius: "980px",
         fontSize: "0.85rem",
         fontWeight: active ? 600 : 400,
         letterSpacing: "-0.01em",

@@ -10,6 +10,8 @@ const QUICK = [
   { label: "Dark Knight", id: "tt0468569" },
   { label: "Inception", id: "tt1375666" },
   { label: "Interstellar", id: "tt0816692" },
+  { label: "The Hangover", id: "tt1119646" },
+  { label: "3 Idiots", id: "tt1187043" },
 ];
 
 const FEATURES = [
@@ -416,7 +418,7 @@ export default function HomePage() {
             style={{
               display: "flex",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "left",
               gap: "6px",
               flexWrap: "wrap",
               marginTop: "20px",
