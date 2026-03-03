@@ -1,6 +1,7 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import AppLoader from "@/components/AppLoader";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
         className={jakarta.variable}
         style={{ fontFamily: "var(--font-display)" }}
       >
+        <ScrollToTop />
         <AppLoader>{children}</AppLoader>
       </body>
     </html>

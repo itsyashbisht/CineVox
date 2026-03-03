@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import Image from "next/image";
 import { fetchMovie } from "@/lib/omdb";
 import { analyzeSentiment } from "@/lib/groq";
+import styles from "./movie.module.css";
 
 function withTimeout(p, ms) {
   return Promise.race([
@@ -153,55 +154,47 @@ export default async function MoviePage({ params }) {
           {movie && (
             <>
               {/* Poster + meta — row on desktop, column on mobile */}
-              <div
-                className="anim-fadeUp"
-                style={{
-                  display: "flex",
-                  gap: "clamp(20px,5vw,48px)",
-                  marginBottom: "clamp(36px,6vw,60px)",
-                  flexWrap: "wrap",
-                }}
-              >
-                {/* Poster */}
-                <div
-                  style={{
-                    flexShrink: 0,
-                    width: "clamp(120px,30vw,190px)",
-                    aspectRatio: "2/3",
-                    borderRadius: "14px",
-                    overflow: "hidden",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    background: "#111",
-                    position: "relative",
-                    boxShadow: "0 32px 64px rgba(0,0,0,0.65)",
-                  }}
-                >
-                  {hasPoster ? (
-                    <Image
-                      src={movie.Poster}
-                      alt={movie.Title}
-                      fill
-                      style={{ objectFit: "cover" }}
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#3a3a3c",
-                        fontSize: "0.75rem",
-                      }}
-                    >
-                      No Poster
-                    </div>
-                  )}
+              <div className={`anim-fadeUp ${styles["cv-movie-hero"]}`}>
+                <div className={styles["cv-poster-wrap"]}>
+                  <div
+                    style={{
+                      borderRadius: "14px",
+                      overflow: "hidden",
+                      border: "1px solid rgba(255,255,255,0.08)",
+                      background: "#111",
+                      position: "relative",
+                      aspectRatio: "2/3",
+                      boxShadow: "0 32px 64px rgba(0,0,0,0.65)",
+                      width: "100%",
+                    }}
+                  >
+                    {hasPoster ? (
+                      <Image
+                        src={movie.Poster}
+                        alt={movie.Title}
+                        fill
+                        style={{ objectFit: "cover" }}
+                      />
+                    ) : (
+                      <div
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#3a3a3c",
+                          fontSize: "0.75rem",
+                        }}
+                      >
+                        No Poster
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Meta */}
-                <div style={{ flex: 1, minWidth: "min(200px,100%)" }}>
+                <div style={{ flex: 1, minWidth: 0, width: "100%" }}>
                   {/* Genres */}
                   <div
                     style={{
@@ -365,7 +358,7 @@ export default async function MoviePage({ params }) {
                 style={{
                   height: "1px",
                   background: "rgba(255,255,255,0.06)",
-                  marginBottom: "36px",
+                  margin: "clamp(28px,5vw,48px) 0",
                 }}
               />
 

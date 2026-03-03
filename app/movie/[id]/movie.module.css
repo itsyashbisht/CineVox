@@ -1,0 +1,25 @@
+.cv-movie-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.cv-poster-wrap {
+    width: 52vw;
+    max-width: 190px;
+    min-width: 130px;
+    flex-shrink: 0;
+}
+
+@media (min-width: 600px) {
+    .cv-movie-hero {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: clamp(24px, 5vw, 52px);
+    }
+
+    .cv-poster-wrap {
+        width: clamp(140px, 20vw, 190px);
+    }
+}

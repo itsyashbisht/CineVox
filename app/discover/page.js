@@ -38,18 +38,17 @@ export default async function DiscoverPage() {
 
         <div
           style={{
-            maxWidth: "1120px",
+            maxWidth: "1200px",
             margin: "0 auto",
-            padding: "0 20px",
+            padding: "0 clamp(16px,4vw,40px)",
             position: "relative",
             zIndex: 1,
           }}
         >
-          {/* Header */}
           <div
             style={{
               paddingTop: "clamp(88px,12vw,128px)",
-              paddingBottom: "clamp(36px,6vw,56px)",
+              paddingBottom: "clamp(32px,5vw,52px)",
               textAlign: "center",
             }}
           >
@@ -84,7 +83,6 @@ export default async function DiscoverPage() {
             </p>
           </div>
 
-          {/* Grid */}
           {movies.length === 0 ? (
             <div
               style={{
@@ -93,38 +91,31 @@ export default async function DiscoverPage() {
                 color: "#3a3a3c",
               }}
             >
-              <svg
-                width="36"
-                height="36"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.2"
-                style={{ margin: "0 auto 14px", display: "block" }}
-              >
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="8" x2="12" y2="12" />
-                <line x1="12" y1="16" x2="12.01" y2="16" />
-              </svg>
               <p style={{ fontSize: "0.88rem" }}>
                 Could not load movies. Check your OMDB API key.
               </p>
             </div>
           ) : (
-            <div
-              className="anim-fadeUp d-3"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, 170px)",
-                justifyContent: "center",
-                gap: "16px",
-                padding: "0 8px clamp(60px,9vw,100px)", // ← 8px side padding for breathing room
-              }}
-            >
-              {movies.map((movie) => (
-                <MovieCard key={movie.imdbID} movie={movie} />
-              ))}
-            </div>
+            <>
+              <div
+                className="anim-fadeUp d-3 cv-movie-grid"
+                style={{ paddingBottom: "clamp(60px,9vw,100px)" }}
+              >
+                {movies.map((movie) => (
+                  <MovieCard key={movie.imdbID} movie={movie} />
+                ))}
+              </div>
+              <style>{`
+                .cv-movie-grid {
+                  display: grid;
+                  gap: clamp(10px, 2vw, 18px);
+                  grid-template-columns: repeat(2, 1fr);
+                }
+                @media (min-width: 540px) { .cv-movie-grid { grid-template-columns: repeat(3, 1fr); } }
+                @media (min-width: 780px) { .cv-movie-grid { grid-template-columns: repeat(4, 1fr); } }
+                @media (min-width: 1060px) { .cv-movie-grid { grid-template-columns: repeat(5, 1fr); } }
+              `}</style>
+            </>
           )}
         </div>
       </main>
