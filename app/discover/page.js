@@ -19,9 +19,7 @@ export default async function DiscoverPage() {
       }}
     >
       <Navbar />
-
       <main style={{ flex: 1, position: "relative", overflow: "hidden" }}>
-        {/* Ambient */}
         <div
           aria-hidden
           style={{
@@ -29,10 +27,10 @@ export default async function DiscoverPage() {
             top: 0,
             left: "50%",
             transform: "translateX(-50%)",
-            width: "800px",
-            height: "400px",
+            width: "min(800px,100vw)",
+            height: "40vh",
             background:
-              "radial-gradient(ellipse, rgba(41,151,255,0.06) 0%, transparent 70%)",
+              "radial-gradient(ellipse,rgba(41,151,255,0.06) 0%,transparent 70%)",
             pointerEvents: "none",
             zIndex: 0,
           }}
@@ -42,7 +40,7 @@ export default async function DiscoverPage() {
           style={{
             maxWidth: "1120px",
             margin: "0 auto",
-            padding: "0 28px",
+            padding: "0 20px",
             position: "relative",
             zIndex: 1,
           }}
@@ -50,15 +48,12 @@ export default async function DiscoverPage() {
           {/* Header */}
           <div
             style={{
-              paddingTop: "136px",
-              paddingBottom: "64px",
+              paddingTop: "clamp(88px,12vw,128px)",
+              paddingBottom: "clamp(36px,6vw,56px)",
               textAlign: "center",
             }}
           >
-            <p
-              className="anim-fadeUp t-label"
-              style={{ marginBottom: "16px", color: "#48484a" }}
-            >
+            <p className="anim-fadeUp t-label" style={{ marginBottom: "12px" }}>
               Curated Selection
             </p>
             <h1
@@ -66,11 +61,11 @@ export default async function DiscoverPage() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 900,
-                fontSize: "clamp(2.4rem, 6vw, 4rem)",
+                fontSize: "clamp(1.9rem,6vw,3.8rem)",
                 letterSpacing: "-0.03em",
                 lineHeight: 1.05,
                 color: "#f5f5f7",
-                marginBottom: "18px",
+                marginBottom: "14px",
               }}
             >
               Popular Films
@@ -78,15 +73,14 @@ export default async function DiscoverPage() {
             <p
               className="anim-fadeUp d-2"
               style={{
-                fontSize: "1rem",
+                fontSize: "clamp(0.85rem,2vw,1rem)",
                 color: "#6e6e73",
-                maxWidth: "380px",
+                maxWidth: "320px",
                 margin: "0 auto",
                 lineHeight: 1.65,
-                fontWeight: 400,
               }}
             >
-              Click any film to generate its full AI sentiment report instantly.
+              Click any film to generate its AI sentiment report instantly.
             </p>
           </div>
 
@@ -95,24 +89,24 @@ export default async function DiscoverPage() {
             <div
               style={{
                 textAlign: "center",
-                padding: "80px 0",
+                padding: "60px 20px",
                 color: "#3a3a3c",
               }}
             >
               <svg
-                width="40"
-                height="40"
+                width="36"
+                height="36"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
                 strokeWidth="1.2"
-                style={{ margin: "0 auto 16px", display: "block" }}
+                style={{ margin: "0 auto 14px", display: "block" }}
               >
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
-              <p style={{ fontSize: "0.9rem" }}>
+              <p style={{ fontSize: "0.88rem" }}>
                 Could not load movies. Check your OMDB API key.
               </p>
             </div>
@@ -121,9 +115,10 @@ export default async function DiscoverPage() {
               className="anim-fadeUp d-3"
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                gap: "18px",
-                paddingBottom: "100px",
+                gridTemplateColumns: "repeat(auto-fill, 170px)",
+                justifyContent: "center",
+                gap: "16px",
+                padding: "0 8px clamp(60px,9vw,100px)", // ← 8px side padding for breathing room
               }}
             >
               {movies.map((movie) => (
@@ -133,7 +128,6 @@ export default async function DiscoverPage() {
           )}
         </div>
       </main>
-
       <Footer />
     </div>
   );

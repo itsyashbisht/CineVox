@@ -23,12 +23,12 @@ export default function MovieCard({ movie }) {
             ? "1px solid rgba(41,151,255,0.3)"
             : "1px solid rgba(255,255,255,0.07)",
           transform: hov
-            ? "translateY(-6px) scale(1.01)"
+            ? "translateY(-5px) scale(1.01)"
             : "translateY(0) scale(1)",
           transition:
             "transform 0.35s cubic-bezier(0.16,1,0.3,1), border-color 0.25s, box-shadow 0.35s",
           boxShadow: hov
-            ? "0 24px 48px rgba(0,0,0,0.7)"
+            ? "0 20px 40px rgba(0,0,0,0.7)"
             : "0 2px 8px rgba(0,0,0,0.3)",
           cursor: "pointer",
         }}
@@ -37,7 +37,7 @@ export default function MovieCard({ movie }) {
         <div
           style={{
             position: "relative",
-            height: "300px",
+            aspectRatio: "2/3",
             background: "#1a1a1a",
             overflow: "hidden",
           }}
@@ -78,26 +78,24 @@ export default function MovieCard({ movie }) {
               </svg>
             </div>
           )}
-          {/* Gradient */}
           <div
             style={{
               position: "absolute",
               inset: 0,
               background:
-                "linear-gradient(to top, rgba(17,17,17,1) 0%, rgba(17,17,17,0.3) 50%, transparent 100%)",
+                "linear-gradient(to top, rgba(17,17,17,1) 0%, rgba(17,17,17,0.2) 50%, transparent 100%)",
             }}
           />
-
           {/* Rating pill */}
           <div
             style={{
               position: "absolute",
-              top: "12px",
-              right: "12px",
+              top: 10,
+              right: 10,
               display: "flex",
               alignItems: "center",
               gap: "4px",
-              padding: "4px 10px",
+              padding: "3px 9px",
               borderRadius: "980px",
               background: "rgba(0,0,0,0.75)",
               border: "1px solid rgba(255,255,255,0.1)",
@@ -105,8 +103,8 @@ export default function MovieCard({ movie }) {
             }}
           >
             <svg
-              width="10"
-              height="10"
+              width="9"
+              height="9"
               viewBox="0 0 24 24"
               fill="#f5a623"
               stroke="#f5a623"
@@ -115,12 +113,7 @@ export default function MovieCard({ movie }) {
               <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
             </svg>
             <span
-              style={{
-                fontSize: "0.7rem",
-                fontWeight: 700,
-                color: "#f5a623",
-                letterSpacing: "0.02em",
-              }}
+              style={{ fontSize: "0.68rem", fontWeight: 700, color: "#f5a623" }}
             >
               {movie.imdbRating}
             </span>
@@ -128,23 +121,48 @@ export default function MovieCard({ movie }) {
         </div>
 
         {/* Info */}
-        <div style={{ padding: "16px 18px 18px" }}>
+        {/* Info — fixed height so all cards are identical */}
+        <div
+          style={{
+            padding: "15px 18px 18px",
+            height: "85px",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+          }}
+        >
           <p
             style={{
               fontWeight: 700,
-              fontSize: "0.92rem",
+              fontSize: "0.88rem",
               color: hov ? "#2997ff" : "#f5f5f7",
               letterSpacing: "-0.02em",
               lineHeight: 1.3,
-              marginBottom: "5px",
+              marginBottom: "4px",
               transition: "color 0.2s",
+              // Clamp to 2 lines max — no layout shift
+              display: "-webkit-box",
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
             }}
           >
             {movie.Title}
           </p>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "6px",
+              flexShrink: 0,
+            }}
+          >
             <span
-              style={{ fontSize: "0.72rem", color: "#48484a", fontWeight: 400 }}
+              style={{
+                fontSize: "0.7rem",
+                color: "#48484a",
+                whiteSpace: "nowrap",
+              }}
             >
               {movie.Year}
             </span>
@@ -157,13 +175,16 @@ export default function MovieCard({ movie }) {
                     borderRadius: "50%",
                     background: "#3a3a3c",
                     display: "inline-block",
+                    flexShrink: 0,
                   }}
                 />
                 <span
                   style={{
-                    fontSize: "0.72rem",
+                    fontSize: "0.7rem",
                     color: "#48484a",
-                    fontWeight: 400,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   {movie.Genre.split(",")[0]}

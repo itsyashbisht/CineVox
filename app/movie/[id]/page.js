@@ -34,19 +34,19 @@ const SENTIMENT = {
 
 export default async function MoviePage({ params }) {
   const { id } = await params;
-  let movie = null;
+  let movie = null,
+    error = null;
   let sentiment = {
     summary: "Sentiment analysis could not be completed.",
     classification: "mixed",
   };
-  let error = null;
 
   try {
     movie = await withTimeout(fetchMovie(id), 5000);
   } catch (e) {
     error =
       e.message === "timeout"
-        ? "Request timed out. Please try again."
+        ? "Request timed out."
         : e.message || "Movie not found.";
   }
 
@@ -74,9 +74,7 @@ export default async function MoviePage({ params }) {
       }}
     >
       <Navbar />
-
       <main style={{ flex: 1, position: "relative" }}>
-        {/* Subtle top glow */}
         <div
           aria-hidden
           style={{
@@ -84,10 +82,10 @@ export default async function MoviePage({ params }) {
             top: 0,
             left: "50%",
             transform: "translateX(-50%)",
-            width: "700px",
+            width: "min(700px,100vw)",
             height: "350px",
             background:
-              "radial-gradient(ellipse, rgba(41,151,255,0.05) 0%, transparent 70%)",
+              "radial-gradient(ellipse,rgba(41,151,255,0.05) 0%,transparent 70%)",
             pointerEvents: "none",
             zIndex: 0,
           }}
@@ -97,25 +95,28 @@ export default async function MoviePage({ params }) {
           style={{
             maxWidth: "960px",
             margin: "0 auto",
-            padding: "128px 28px 80px",
+            padding: "clamp(80px,12vw,128px) 20px clamp(48px,7vw,80px)",
             position: "relative",
             zIndex: 1,
           }}
         >
-          {/* ── Error state ── */}
+          {/* Error */}
           {error && (
             <div
               className="anim-scaleIn"
-              style={{ textAlign: "center", padding: "80px 0" }}
+              style={{
+                textAlign: "center",
+                padding: "clamp(48px,8vw,80px) 20px",
+              }}
             >
-              <div style={{ fontSize: "3rem", marginBottom: "20px" }}>🎬</div>
+              <div style={{ fontSize: "2.6rem", marginBottom: "14px" }}>🎬</div>
               <h2
                 style={{
                   fontFamily: "var(--font-display)",
                   fontWeight: 800,
-                  fontSize: "1.8rem",
+                  fontSize: "clamp(1.3rem,4vw,1.8rem)",
                   color: "#f5f5f7",
-                  marginBottom: "12px",
+                  marginBottom: "10px",
                 }}
               >
                 Film not found
@@ -123,15 +124,14 @@ export default async function MoviePage({ params }) {
               <p
                 style={{
                   color: "#6e6e73",
-                  marginBottom: "32px",
-                  fontSize: "0.95rem",
+                  marginBottom: "28px",
+                  fontSize: "0.9rem",
                 }}
               >
                 {error}
               </p>
               <a
                 href="/"
-                className="back-link"
                 style={{
                   display: "inline-flex",
                   alignItems: "center",
@@ -150,16 +150,15 @@ export default async function MoviePage({ params }) {
             </div>
           )}
 
-          {/* ── Movie content ── */}
           {movie && (
             <>
-              {/* Top: poster + meta */}
+              {/* Poster + meta — row on desktop, column on mobile */}
               <div
                 className="anim-fadeUp"
                 style={{
                   display: "flex",
-                  gap: "52px",
-                  marginBottom: "64px",
+                  gap: "clamp(20px,5vw,48px)",
+                  marginBottom: "clamp(36px,6vw,60px)",
                   flexWrap: "wrap",
                 }}
               >
@@ -167,14 +166,14 @@ export default async function MoviePage({ params }) {
                 <div
                   style={{
                     flexShrink: 0,
-                    width: "200px",
-                    height: "296px",
+                    width: "clamp(120px,30vw,190px)",
+                    aspectRatio: "2/3",
                     borderRadius: "14px",
                     overflow: "hidden",
                     border: "1px solid rgba(255,255,255,0.08)",
                     background: "#111",
                     position: "relative",
-                    boxShadow: "0 40px 80px rgba(0,0,0,0.7)",
+                    boxShadow: "0 32px 64px rgba(0,0,0,0.65)",
                   }}
                 >
                   {hasPoster ? (
@@ -193,7 +192,7 @@ export default async function MoviePage({ params }) {
                         alignItems: "center",
                         justifyContent: "center",
                         color: "#3a3a3c",
-                        fontSize: "0.8rem",
+                        fontSize: "0.75rem",
                       }}
                     >
                       No Poster
@@ -202,23 +201,23 @@ export default async function MoviePage({ params }) {
                 </div>
 
                 {/* Meta */}
-                <div style={{ flex: 1, minWidth: "240px" }}>
+                <div style={{ flex: 1, minWidth: "min(200px,100%)" }}>
                   {/* Genres */}
                   <div
                     style={{
                       display: "flex",
                       gap: "6px",
                       flexWrap: "wrap",
-                      marginBottom: "18px",
+                      marginBottom: "14px",
                     }}
                   >
                     {genres.map((g) => (
                       <span
                         key={g}
                         style={{
-                          padding: "3px 10px",
+                          padding: "3px 9px",
                           borderRadius: "980px",
-                          fontSize: "0.65rem",
+                          fontSize: "0.6rem",
                           fontWeight: 600,
                           letterSpacing: "0.08em",
                           textTransform: "uppercase",
@@ -232,28 +231,27 @@ export default async function MoviePage({ params }) {
                     ))}
                   </div>
 
-                  {/* Title */}
                   <h1
                     style={{
                       fontFamily: "var(--font-display)",
                       fontWeight: 900,
-                      fontSize: "clamp(1.9rem, 4vw, 2.8rem)",
+                      fontSize: "clamp(1.5rem,4vw,2.6rem)",
                       letterSpacing: "-0.03em",
                       lineHeight: 1.05,
                       color: "#f5f5f7",
-                      marginBottom: "18px",
+                      marginBottom: "14px",
                     }}
                   >
                     {movie.Title}
                   </h1>
 
-                  {/* Stats */}
+                  {/* Stats row */}
                   <div
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      gap: "16px",
-                      marginBottom: "22px",
+                      gap: "10px",
+                      marginBottom: "18px",
                       flexWrap: "wrap",
                     }}
                   >
@@ -261,12 +259,12 @@ export default async function MoviePage({ params }) {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: "5px",
+                        gap: "4px",
                       }}
                     >
                       <svg
-                        width="13"
-                        height="13"
+                        width="12"
+                        height="12"
                         viewBox="0 0 24 24"
                         fill="#f5a623"
                         stroke="#f5a623"
@@ -278,21 +276,21 @@ export default async function MoviePage({ params }) {
                         style={{
                           fontWeight: 700,
                           color: "#f5a623",
-                          fontSize: "0.9rem",
+                          fontSize: "0.875rem",
                         }}
                       >
                         {movie.imdbRating}
                       </span>
-                      <span style={{ fontSize: "0.75rem", color: "#3a3a3c" }}>
+                      <span style={{ fontSize: "0.7rem", color: "#3a3a3c" }}>
                         IMDb
                       </span>
                     </div>
                     <Dot />
-                    <span style={{ fontSize: "0.82rem", color: "#6e6e73" }}>
+                    <span style={{ fontSize: "0.78rem", color: "#6e6e73" }}>
                       {movie.Year}
                     </span>
                     <Dot />
-                    <span style={{ fontSize: "0.82rem", color: "#6e6e73" }}>
+                    <span style={{ fontSize: "0.78rem", color: "#6e6e73" }}>
                       {movie.Runtime}
                     </span>
                     {movie.Rated && movie.Rated !== "N/A" && (
@@ -300,11 +298,11 @@ export default async function MoviePage({ params }) {
                         <Dot />
                         <span
                           style={{
-                            fontSize: "0.72rem",
+                            fontSize: "0.65rem",
                             fontWeight: 600,
                             color: "#6e6e73",
                             border: "1px solid #3a3a3c",
-                            padding: "1px 6px",
+                            padding: "1px 5px",
                             borderRadius: "4px",
                           }}
                         >
@@ -316,11 +314,10 @@ export default async function MoviePage({ params }) {
 
                   <p
                     style={{
-                      fontSize: "0.9rem",
+                      fontSize: "clamp(0.82rem,2vw,0.9rem)",
                       color: "#6e6e73",
                       lineHeight: 1.75,
-                      fontWeight: 400,
-                      marginBottom: "28px",
+                      marginBottom: "20px",
                       maxWidth: "460px",
                     }}
                   >
@@ -328,32 +325,29 @@ export default async function MoviePage({ params }) {
                   </p>
 
                   <MetaRow label="Director" value={movie.Director} />
-
-                  {/* Cast chips */}
-                  <div style={{ marginTop: "14px" }}>
+                  <div style={{ marginTop: "12px" }}>
                     <p
                       style={{
-                        fontSize: "0.65rem",
+                        fontSize: "0.6rem",
                         fontWeight: 700,
                         letterSpacing: "0.1em",
                         textTransform: "uppercase",
                         color: "#3a3a3c",
-                        marginBottom: "8px",
+                        marginBottom: "7px",
                       }}
                     >
                       Cast
                     </p>
                     <div
-                      style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}
+                      style={{ display: "flex", flexWrap: "wrap", gap: "5px" }}
                     >
                       {cast.map((a) => (
                         <span
                           key={a}
                           style={{
-                            padding: "4px 12px",
+                            padding: "3px 10px",
                             borderRadius: "980px",
-                            fontSize: "0.78rem",
-                            fontWeight: 400,
+                            fontSize: "0.73rem",
                             background: "rgba(255,255,255,0.04)",
                             border: "1px solid rgba(255,255,255,0.07)",
                             color: "#a1a1a6",
@@ -367,24 +361,23 @@ export default async function MoviePage({ params }) {
                 </div>
               </div>
 
-              {/* Divider */}
               <div
                 style={{
                   height: "1px",
                   background: "rgba(255,255,255,0.06)",
-                  marginBottom: "48px",
+                  marginBottom: "36px",
                 }}
               />
 
-              {/* ── AI Sentiment Panel ── */}
+              {/* Sentiment */}
               <div
                 className="anim-fadeUp d-2"
                 style={{
-                  padding: "40px",
+                  padding: "clamp(22px,5vw,36px)",
                   borderRadius: "20px",
                   background: sc.bg,
                   border: `1px solid ${sc.border}`,
-                  marginBottom: "40px",
+                  marginBottom: "28px",
                 }}
               >
                 <div
@@ -392,20 +385,20 @@ export default async function MoviePage({ params }) {
                     display: "flex",
                     alignItems: "flex-start",
                     justifyContent: "space-between",
-                    gap: "16px",
+                    gap: "12px",
                     flexWrap: "wrap",
-                    marginBottom: "22px",
+                    marginBottom: "16px",
                   }}
                 >
                   <div>
                     <p
                       style={{
-                        fontSize: "0.65rem",
+                        fontSize: "0.6rem",
                         fontWeight: 700,
                         letterSpacing: "0.12em",
                         textTransform: "uppercase",
                         color: "#3a3a3c",
-                        marginBottom: "8px",
+                        marginBottom: "6px",
                       }}
                     >
                       AI Analysis · Groq Llama 3.1
@@ -414,7 +407,7 @@ export default async function MoviePage({ params }) {
                       style={{
                         fontFamily: "var(--font-display)",
                         fontWeight: 800,
-                        fontSize: "1.4rem",
+                        fontSize: "clamp(1rem,3vw,1.35rem)",
                         color: "#f5f5f7",
                         letterSpacing: "-0.03em",
                       }}
@@ -422,14 +415,12 @@ export default async function MoviePage({ params }) {
                       Audience Sentiment
                     </h2>
                   </div>
-
-                  {/* Badge */}
                   <div
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
-                      gap: "8px",
-                      padding: "8px 18px",
+                      gap: "7px",
+                      padding: "7px 15px",
                       borderRadius: "980px",
                       background: sc.bg,
                       border: `1px solid ${sc.border}`,
@@ -437,17 +428,17 @@ export default async function MoviePage({ params }) {
                   >
                     <span
                       style={{
-                        width: 8,
-                        height: 8,
+                        width: 7,
+                        height: 7,
                         borderRadius: "50%",
                         background: sc.color,
                         display: "inline-block",
-                        boxShadow: `0 0 10px ${sc.color}`,
+                        boxShadow: `0 0 8px ${sc.color}`,
                       }}
                     />
                     <span
                       style={{
-                        fontSize: "0.78rem",
+                        fontSize: "0.73rem",
                         fontWeight: 700,
                         color: sc.color,
                         letterSpacing: "0.06em",
@@ -458,66 +449,65 @@ export default async function MoviePage({ params }) {
                     </span>
                   </div>
                 </div>
-
                 <p
                   style={{
-                    fontSize: "0.975rem",
+                    fontSize: "clamp(0.84rem,2vw,0.95rem)",
                     color: "#a1a1a6",
                     lineHeight: 1.8,
-                    fontWeight: 400,
-                    maxWidth: "660px",
                   }}
                 >
                   {sentiment.summary}
                 </p>
               </div>
 
-              {/* ── Critical Ratings ── */}
+              {/* Ratings */}
               {movie.Ratings?.length > 0 && (
                 <div
                   className="anim-fadeUp d-3"
-                  style={{ marginBottom: "56px" }}
+                  style={{ marginBottom: "clamp(36px,6vw,52px)" }}
                 >
                   <p
                     style={{
-                      fontSize: "0.65rem",
+                      fontSize: "0.6rem",
                       fontWeight: 700,
                       letterSpacing: "0.12em",
                       textTransform: "uppercase",
                       color: "#3a3a3c",
-                      marginBottom: "16px",
+                      marginBottom: "12px",
                     }}
                   >
                     Critical Ratings
                   </p>
                   <div
-                    style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
+                    style={{ display: "flex", gap: "9px", flexWrap: "wrap" }}
                   >
                     {movie.Ratings.map((r) => (
                       <div
                         key={r.Source}
                         style={{
-                          padding: "16px 22px",
+                          padding: "13px 18px",
                           borderRadius: "12px",
                           background: "#111",
                           border: "1px solid rgba(255,255,255,0.06)",
-                          minWidth: "120px",
+                          minWidth: "100px",
+                          flex: "1 1 auto",
+                          maxWidth: "180px",
                         }}
                       >
                         <p
                           style={{
                             fontFamily: "var(--font-display)",
                             fontWeight: 800,
-                            fontSize: "1.15rem",
+                            fontSize: "1.05rem",
                             color: "#f5f5f7",
-                            marginBottom: "4px",
+                            marginBottom: "3px",
                           }}
                         >
                           {r.Value}
                         </p>
                         <p
                           style={{
-                            fontSize: "0.7rem",
+                            fontSize: "0.67rem",
                             color: "#48484a",
                             fontWeight: 500,
                           }}
@@ -530,11 +520,10 @@ export default async function MoviePage({ params }) {
                 </div>
               )}
 
-              {/* Back */}
               <a href="/" className="back-link">
                 <svg
-                  width="16"
-                  height="16"
+                  width="15"
+                  height="15"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -548,7 +537,6 @@ export default async function MoviePage({ params }) {
           )}
         </div>
       </main>
-
       <Footer />
     </div>
   );
@@ -567,25 +555,22 @@ function Dot() {
     />
   );
 }
-
 function MetaRow({ label, value }) {
   return (
     <div>
       <p
         style={{
-          fontSize: "0.65rem",
+          fontSize: "0.6rem",
           fontWeight: 700,
           letterSpacing: "0.1em",
           textTransform: "uppercase",
           color: "#3a3a3c",
-          marginBottom: "5px",
+          marginBottom: "4px",
         }}
       >
         {label}
       </p>
-      <p style={{ fontSize: "0.875rem", color: "#a1a1a6", fontWeight: 400 }}>
-        {value}
-      </p>
+      <p style={{ fontSize: "0.84rem", color: "#a1a1a6" }}>{value}</p>
     </div>
   );
 }

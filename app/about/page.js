@@ -33,21 +33,21 @@ export default function AboutPage() {
             width: "500px",
             height: "500px",
             background:
-              "radial-gradient(ellipse, rgba(41,151,255,0.06) 0%, transparent 65%)",
+              "radial-gradient(ellipse,rgba(41,151,255,0.06) 0%,transparent 65%)",
             pointerEvents: "none",
           }}
         />
 
         <div
           style={{
-            maxWidth: "720px",
+            maxWidth: "680px",
             margin: "0 auto",
-            padding: "136px 28px 100px",
+            padding: "clamp(88px,12vw,136px) 20px clamp(60px,9vw,100px)",
             position: "relative",
             zIndex: 1,
           }}
         >
-          <p className="anim-fadeUp t-label" style={{ marginBottom: "20px" }}>
+          <p className="anim-fadeUp t-label" style={{ marginBottom: "16px" }}>
             About the project
           </p>
 
@@ -56,12 +56,11 @@ export default function AboutPage() {
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 900,
-              fontSize: "clamp(2.8rem, 7vw, 4.5rem)",
+              fontSize: "clamp(2.2rem,7vw,4.2rem)",
               letterSpacing: "-0.03em",
               lineHeight: 1.0,
               color: "#f5f5f7",
-              marginBottom: "40px",
-              fontStyle: "normal",
+              marginBottom: "clamp(24px,4vw,36px)",
             }}
           >
             Built for film
@@ -69,7 +68,10 @@ export default function AboutPage() {
             <span style={{ color: "#2997ff" }}>intelligence.</span>
           </h1>
 
-          <div className="anim-fadeUp d-2" style={{ marginBottom: "40px" }}>
+          <div
+            className="anim-fadeUp d-2"
+            style={{ marginBottom: "clamp(24px,4vw,36px)" }}
+          >
             <div className="accent-line" />
           </div>
 
@@ -78,16 +80,15 @@ export default function AboutPage() {
             style={{
               display: "flex",
               flexDirection: "column",
-              gap: "20px",
-              marginBottom: "64px",
+              gap: "16px",
+              marginBottom: "clamp(40px,7vw,60px)",
             }}
           >
             <p
               style={{
-                fontSize: "1.05rem",
+                fontSize: "clamp(0.9rem,2.5vw,1.05rem)",
                 color: "#a1a1a6",
                 lineHeight: 1.8,
-                fontWeight: 400,
               }}
             >
               CineVox is an AI-powered movie sentiment engine built as a Brew
@@ -97,10 +98,9 @@ export default function AboutPage() {
             </p>
             <p
               style={{
-                fontSize: "1.05rem",
+                fontSize: "clamp(0.9rem,2.5vw,1.05rem)",
                 color: "#6e6e73",
                 lineHeight: 1.8,
-                fontWeight: 400,
               }}
             >
               Movie metadata is fetched from OMDB, then passed alongside ratings
@@ -113,53 +113,51 @@ export default function AboutPage() {
           <div className="anim-fadeUp d-4">
             <p
               style={{
-                fontSize: "0.65rem",
+                fontSize: "0.63rem",
                 fontWeight: 700,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
                 color: "#3a3a3c",
-                marginBottom: "20px",
+                marginBottom: "14px",
               }}
             >
               Technology Stack
             </p>
+            {/* 1 col on mobile, 2 col on wider screens */}
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 1fr",
+                gridTemplateColumns:
+                  "repeat(auto-fit,minmax(min(200px,100%),1fr))",
                 gap: "1px",
                 background: "rgba(255,255,255,0.06)",
                 borderRadius: "16px",
                 overflow: "hidden",
               }}
             >
-              {STACK.map((item, i) => (
+              {STACK.map((item) => (
                 <div
                   key={item.label}
                   style={{
-                    padding: "20px 24px",
+                    padding: "clamp(14px,3vw,20px) clamp(16px,3vw,22px)",
                     background: "#000",
-                    borderBottom:
-                      i < STACK.length - 2
-                        ? "1px solid rgba(255,255,255,0.05)"
-                        : "none",
                   }}
                 >
                   <p
                     style={{
-                      fontSize: "0.65rem",
+                      fontSize: "0.62rem",
                       fontWeight: 700,
                       letterSpacing: "0.1em",
                       textTransform: "uppercase",
                       color: "#3a3a3c",
-                      marginBottom: "6px",
+                      marginBottom: "5px",
                     }}
                   >
                     {item.label}
                   </p>
                   <p
                     style={{
-                      fontSize: "0.875rem",
+                      fontSize: "0.84rem",
                       color: "#a1a1a6",
                       fontWeight: 500,
                     }}
@@ -174,17 +172,17 @@ export default function AboutPage() {
           <div
             className="anim-fadeUp d-5"
             style={{
-              marginTop: "56px",
+              marginTop: "clamp(36px,6vw,52px)",
               display: "flex",
-              gap: "12px",
+              gap: "10px",
               flexWrap: "wrap",
             }}
           >
-            <HoverButton href="/" primary>
+            <HoverBtn href="/" primary>
               Try it now
               <svg
-                width="14"
-                height="14"
+                width="13"
+                height="13"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -192,8 +190,8 @@ export default function AboutPage() {
               >
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
-            </HoverButton>
-            <HoverButton href="/discover">Browse films</HoverButton>
+            </HoverBtn>
+            <HoverBtn href="/discover">Browse films</HoverBtn>
           </div>
         </div>
       </main>
@@ -202,7 +200,7 @@ export default function AboutPage() {
   );
 }
 
-function HoverButton({ href, primary, children }) {
+function HoverBtn({ href, primary, children }) {
   const [hov, setHov] = useState(false);
   return (
     <a
@@ -213,18 +211,17 @@ function HoverButton({ href, primary, children }) {
         display: "inline-flex",
         alignItems: "center",
         gap: "8px",
-        padding: "13px 26px",
+        padding: "clamp(11px,2vw,13px) clamp(20px,3vw,26px)",
         borderRadius: "980px",
         textDecoration: "none",
         fontWeight: primary ? 700 : 600,
-        fontSize: "0.875rem",
-        letterSpacing: "-0.01em",
+        fontSize: "clamp(0.82rem,2vw,0.875rem)",
         transition: "background 0.15s",
         ...(primary
           ? {
               background: hov ? "#0a84ff" : "#2997ff",
               color: "#fff",
-              boxShadow: "0 4px 20px rgba(41,151,255,0.3)",
+              boxShadow: "0 4px 18px rgba(41,151,255,0.3)",
             }
           : {
               background: hov

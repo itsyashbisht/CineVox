@@ -2,6 +2,75 @@
 
 CineVox is an AI-powered movie insight app. Enter an IMDb ID and get movie metadata from OMDb plus an AI-generated sentiment summary/classification powered by Groq.
 
+## Features
+
+- IMDb ID based movie lookup (`tt1234567` format).
+- AI sentiment analysis with:
+- `summary` (short audience response overview)
+- `classification` (`positive`, `mixed`, or `negative`)
+- Rich movie details:
+- Title, year, plot, cast, genre, director, runtime, IMDb rating, poster.
+- Responsive pages for:
+- Home (`/`)
+- Discover (`/discover`)
+- About (`/about`)
+- Dynamic movie details (`/movie/[id]`)
+- Backend API route at `/api/movie?id=<imdbId>` for movie + sentiment response.
+- Validation for invalid IMDb IDs with clear error handling (`400`, `404`, `500`).
+- Caching strategy:
+- OMDb fetch revalidation (`600s`)
+- In-memory API cache with 10-minute TTL
+
+## How It Works
+
+1. User enters an IMDb ID in the UI.
+2. App calls `/api/movie?id=<imdbId>`.
+3. API validates ID format.
+4. API checks cache, otherwise fetches movie metadata from OMDb.
+5. API sends movie context to Groq model for sentiment generation.
+6. API returns merged JSON response to render in the UI.
+
+## API Response Shape
+
+```json
+{
+  "imdbId": "tt0111161",
+  "title": "The Shawshank Redemption",
+  "year": "1994",
+  "rating": "9.3",
+  "poster": "https://...",
+  "plot": "...",
+  "cast": ["Tim Robbins", "Morgan Freeman"],
+  "genre": "Drama",
+  "director": "Frank Darabont",
+  "runtime": "142 min",
+  "sentiment": {
+    "summary": "Audience reaction summary...",
+    "classification": "positive"
+  }
+}
+```
+
+## Project Structure
+
+```text
+app/
+  about/page.js
+  discover/page.js
+  movie/[id]/page.js
+  api/movie/route.js
+lib/
+  omdb.js
+  groq.js
+  validation.js
+components/
+  MovieCard.jsx
+  Navbar.jsx
+  SearchBar.jsx
+  SentimentPanel.jsx
+  SkeletonLoader.jsx
+```
+
 ## Setup Instructions
 
 ### 1. Prerequisites

@@ -2,13 +2,89 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const NAV_LINKS = [
+function Logo({ size = 28 }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 40 40"
+      fill="none"
+      style={{ display: "block", flexShrink: 0 }}
+    >
+      <defs>
+        <linearGradient
+          id="cv-g-foot"
+          x1="0"
+          y1="0"
+          x2="40"
+          y2="40"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop offset="0%" stopColor="#2997ff" />
+          <stop offset="100%" stopColor="#0071e3" />
+        </linearGradient>
+      </defs>
+      <rect width="40" height="40" rx="10" fill="url(#cv-g-foot)" />
+      <rect
+        x="5"
+        y="5"
+        width="4"
+        height="4"
+        rx="1"
+        fill="rgba(255,255,255,0.28)"
+      />
+      <rect
+        x="31"
+        y="5"
+        width="4"
+        height="4"
+        rx="1"
+        fill="rgba(255,255,255,0.28)"
+      />
+      <rect
+        x="5"
+        y="31"
+        width="4"
+        height="4"
+        rx="1"
+        fill="rgba(255,255,255,0.28)"
+      />
+      <rect
+        x="31"
+        y="31"
+        width="4"
+        height="4"
+        rx="1"
+        fill="rgba(255,255,255,0.28)"
+      />
+      <circle cx="20" cy="20" r="8.5" fill="rgba(0,0,0,0.3)" />
+      {[0, 60, 120, 180, 240, 300].map((a) => (
+        <rect
+          key={a}
+          x="18.5"
+          y="12.5"
+          width="3"
+          height="6"
+          rx="1.5"
+          fill="white"
+          opacity="0.85"
+          transform={`rotate(${a} 20 20)`}
+        />
+      ))}
+      <rect x="14" y="17.5" width="2.2" height="5" rx="1.1" fill="white" />
+      <rect x="17.5" y="15" width="2.2" height="10" rx="1.1" fill="white" />
+      <rect x="21" y="16.5" width="2.2" height="7" rx="1.1" fill="white" />
+      <rect x="24.5" y="18.5" width="2.2" height="3" rx="1.1" fill="white" />
+    </svg>
+  );
+}
+
+const NAV = [
   { label: "Home", href: "/" },
   { label: "Discover", href: "/discover" },
   { label: "About", href: "/about" },
 ];
-
-const STACK_LINKS = [
+const STACK = [
   { label: "Next.js 16", href: "#" },
   { label: "Groq AI", href: "#" },
   { label: "OMDB API", href: "#" },
@@ -20,53 +96,38 @@ export default function Footer() {
       style={{
         borderTop: "1px solid rgba(255,255,255,0.07)",
         background: "#000",
-        padding: "56px 28px 40px",
+        padding: "clamp(36px,6vw,52px) 20px 28px",
       }}
     >
       <div style={{ maxWidth: "1120px", margin: "0 auto" }}>
-        {/* Top */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "flex-start",
             flexWrap: "wrap",
-            gap: "40px",
-            marginBottom: "48px",
+            gap: "32px",
+            marginBottom: "36px",
           }}
         >
           {/* Brand */}
-          <div>
+          <div style={{ minWidth: "140px" }}>
             <Link
               href="/"
               style={{
                 textDecoration: "none",
                 display: "flex",
                 alignItems: "center",
-                gap: "10px",
-                marginBottom: "14px",
+                gap: "9px",
+                marginBottom: "10px",
               }}
             >
-              <div
-                style={{
-                  width: "30px",
-                  height: "30px",
-                  borderRadius: "8px",
-                  background: "linear-gradient(145deg, #2997ff, #0071e3)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="white">
-                  <path d="M18 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3ZM8 17H6v-2h2v2Zm0-4H6v-2h2v2Zm0-4H6V7h2v2Zm6 8h-4v-2h4v2Zm0-4h-4v-2h4v2Zm0-4h-4V7h4v2Zm4 8h-2v-2h2v2Zm0-4h-2v-2h2v2Zm0-4h-2V7h2v2Z" />
-                </svg>
-              </div>
+              <Logo size={26} />
               <span
                 style={{
-                  fontWeight: 700,
+                  fontWeight: 800,
                   fontSize: "0.95rem",
-                  letterSpacing: "-0.02em",
+                  letterSpacing: "-0.03em",
                   color: "#f5f5f7",
                 }}
               >
@@ -75,43 +136,41 @@ export default function Footer() {
             </Link>
             <p
               style={{
-                fontSize: "0.8rem",
+                fontSize: "0.76rem",
                 color: "#48484a",
-                maxWidth: "200px",
-                lineHeight: 1.6,
+                maxWidth: "180px",
+                lineHeight: 1.65,
               }}
             >
-              AI-powered film sentiment analysis. Built for the Brew internship.
+              AI-powered film sentiment. Built for the Brew internship.
             </p>
           </div>
 
-          {/* Link columns */}
-          <div style={{ display: "flex", gap: "64px", flexWrap: "wrap" }}>
-            <FooterCol title="Navigate" links={NAV_LINKS} />
-            <FooterCol title="Stack" links={STACK_LINKS} />
+          {/* Columns */}
+          <div style={{ display: "flex", gap: "44px", flexWrap: "wrap" }}>
+            <FooterCol title="Navigate" links={NAV} />
+            <FooterCol title="Stack" links={STACK} />
           </div>
         </div>
 
-        {/* Divider */}
         <div
           style={{
             height: "1px",
-            background: "rgba(255,255,255,0.07)",
-            marginBottom: "28px",
+            background: "rgba(255,255,255,0.06)",
+            marginBottom: "20px",
           }}
         />
 
-        {/* Bottom */}
         <div
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "12px",
+            gap: "10px",
           }}
         >
-          <p style={{ fontSize: "0.72rem", color: "#48484a" }}>
+          <p style={{ fontSize: "0.68rem", color: "#48484a" }}>
             © 2026 CineVox. Crafted for Brew internship review.
           </p>
           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
@@ -125,7 +184,7 @@ export default function Footer() {
                 boxShadow: "0 0 6px #30d158",
               }}
             />
-            <span style={{ fontSize: "0.72rem", color: "#48484a" }}>
+            <span style={{ fontSize: "0.68rem", color: "#48484a" }}>
               All systems operational
             </span>
           </div>
@@ -140,26 +199,26 @@ function FooterCol({ title, links }) {
     <div>
       <p
         style={{
-          fontSize: "0.68rem",
+          fontSize: "0.62rem",
           fontWeight: 700,
           letterSpacing: "0.1em",
           textTransform: "uppercase",
           color: "#48484a",
-          marginBottom: "16px",
+          marginBottom: "12px",
         }}
       >
         {title}
       </p>
-      <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "9px" }}>
         {links.map((l) => (
-          <FooterLink key={l.label} href={l.href} label={l.label} />
+          <FLink key={l.label} href={l.href} label={l.label} />
         ))}
       </div>
     </div>
   );
 }
 
-function FooterLink({ href, label }) {
+function FLink({ href, label }) {
   const [hov, setHov] = useState(false);
   return (
     <Link
@@ -167,10 +226,9 @@ function FooterLink({ href, label }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        fontSize: "0.82rem",
+        fontSize: "0.8rem",
         color: hov ? "#f5f5f7" : "#a1a1a6",
         textDecoration: "none",
-        fontWeight: 400,
         transition: "color 0.15s",
       }}
     >

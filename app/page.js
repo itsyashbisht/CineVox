@@ -50,7 +50,7 @@ const FEATURES = [
   {
     num: "03",
     title: "Groq-Speed Results",
-    desc: "Sub-second AI inference. The world's fastest LLM API delivers results before the trailer ends.",
+    desc: "Sub-second AI inference. The world's fastest LLM API delivers results instantly.",
     icon: (
       <svg
         width="20"
@@ -75,22 +75,19 @@ export default function HomePage() {
   const router = useRouter();
 
   useEffect(() => setMounted(true), []);
-
   const validate = (v) => /^tt\d{7,8}$/.test(v.trim());
-
   const handleSubmit = () => {
     if (!id.trim()) {
       setError("Please enter an IMDb ID");
       return;
     }
     if (!validate(id)) {
-      setError("Format: tt followed by 7–8 digits (e.g. tt0111161)");
+      setError("Format: tt followed by 7–8 digits");
       return;
     }
     setError("");
     router.push(`/movie/${id.trim()}`);
   };
-
   if (!mounted) return null;
 
   return (
@@ -103,9 +100,8 @@ export default function HomePage() {
       }}
     >
       <Navbar />
-
       <main style={{ flex: 1, position: "relative", overflow: "hidden" }}>
-        {/* Ambient glow */}
+        {/* Ambient */}
         <div
           aria-hidden
           style={{
@@ -118,53 +114,42 @@ export default function HomePage() {
           <div
             style={{
               position: "absolute",
-              top: "-20%",
+              top: "-15%",
               left: "50%",
               transform: "translateX(-50%)",
-              width: "900px",
-              height: "600px",
+              width: "min(900px,100vw)",
+              height: "60vh",
               background:
                 "radial-gradient(ellipse, rgba(41,151,255,0.09) 0%, transparent 65%)",
               animation: "pulse-glow 6s ease-in-out infinite",
             }}
           />
-          <div
-            style={{
-              position: "absolute",
-              bottom: "10%",
-              right: "-5%",
-              width: "500px",
-              height: "500px",
-              background:
-                "radial-gradient(ellipse, rgba(41,151,255,0.05) 0%, transparent 60%)",
-            }}
-          />
         </div>
 
-        {/* Hero */}
+        {/* ── Hero ── */}
         <section
           style={{
             position: "relative",
             zIndex: 1,
             maxWidth: "820px",
             margin: "0 auto",
-            padding: "148px 28px 80px",
+            padding: "clamp(96px,14vw,148px) 20px clamp(48px,7vw,80px)",
             textAlign: "center",
           }}
         >
-          {/* Status badge */}
+          {/* Badge */}
           <div
             className="anim-fadeUp"
             style={{
               display: "inline-flex",
               alignItems: "center",
-              gap: "9px",
-              padding: "7px 20px",
+              gap: "8px",
+              padding: "6px 16px",
               borderRadius: "980px",
-              marginBottom: "44px",
+              marginBottom: "clamp(28px,5vw,44px)",
               background: "rgba(41,151,255,0.08)",
               border: "1px solid rgba(41,151,255,0.2)",
-              fontSize: "0.72rem",
+              fontSize: "0.68rem",
               fontWeight: 600,
               letterSpacing: "0.1em",
               textTransform: "uppercase",
@@ -203,81 +188,77 @@ export default function HomePage() {
             CineVox · Powered by Groq AI
           </div>
 
-          {/* Headline — no italics, straight bold */}
+          {/* Headline */}
           <h1
             className="anim-fadeUp d-1"
             style={{
               fontFamily: "var(--font-display)",
               fontWeight: 900,
-              fontSize: "clamp(3.2rem, 8vw, 6rem)",
+              fontSize: "clamp(2.4rem,9vw,6rem)",
               lineHeight: 1.0,
               letterSpacing: "-0.03em",
               color: "#f5f5f7",
-              marginBottom: "28px",
-              fontStyle: "normal",
+              marginBottom: "clamp(16px,3vw,28px)",
             }}
           >
             Every film has
             <br />
             <span
               style={{
-                background: "linear-gradient(135deg, #2997ff 0%, #64b5ff 100%)",
+                background: "linear-gradient(135deg,#2997ff 0%,#64b5ff 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                fontStyle: "normal",
               }}
             >
               a story to tell.
             </span>
           </h1>
 
-          {/* Sub — no italics */}
+          {/* Sub */}
           <p
             className="anim-fadeUp d-2"
             style={{
-              fontSize: "clamp(1rem, 2.2vw, 1.15rem)",
-              fontWeight: 400,
-              fontStyle: "normal",
+              fontSize: "clamp(0.9rem,2.5vw,1.1rem)",
               color: "#a1a1a6",
               lineHeight: 1.75,
-              maxWidth: "520px",
-              margin: "0 auto 56px",
+              maxWidth: "460px",
+              margin: "0 auto clamp(32px,6vw,52px)",
             }}
           >
             Enter any IMDb ID. Our AI reads audience reviews and reveals what
             people really felt.
           </p>
 
-          {/* Search box */}
+          {/* Search */}
           <div
             className="anim-fadeUp d-3"
-            style={{ maxWidth: "560px", margin: "0 auto" }}
+            style={{ maxWidth: "540px", margin: "0 auto" }}
           >
             <div
               style={{
-                borderRadius: "22px", // ← more curved
+                borderRadius: "22px",
                 padding: "3px",
                 background: focused
-                  ? "linear-gradient(135deg, rgba(41,151,255,0.6), rgba(41,151,255,0.2))"
+                  ? "linear-gradient(135deg,rgba(41,151,255,0.55),rgba(41,151,255,0.18))"
                   : "rgba(255,255,255,0.07)",
-                transition: "background 0.3s ease",
-                boxShadow: focused ? "0 0 40px rgba(41,151,255,0.12)" : "none",
+                transition: "background 0.3s",
+                boxShadow: focused ? "0 0 36px rgba(41,151,255,0.12)" : "none",
               }}
             >
               <div
                 style={{
-                  borderRadius: "19px", // ← more curved inner
+                  borderRadius: "19px",
                   background: "#111",
                   display: "flex",
                   alignItems: "center",
-                  padding: "0 4px 0 20px",
-                  gap: "12px",
+                  padding: "0 4px 0 16px",
+                  gap: "10px",
                 }}
               >
                 <svg
-                  width="18"
-                  height="18"
+                  width="17"
+                  height="17"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke={focused ? "#2997ff" : "#48484a"}
@@ -306,10 +287,9 @@ export default function HomePage() {
                     color: "#f5f5f7",
                     fontSize: "1rem",
                     fontWeight: 500,
-                    fontFamily: "var(--font-body)",
-                    padding: "18px 0",
-                    letterSpacing: "0.02em",
-                    fontStyle: "normal",
+                    fontFamily: "var(--font-display)",
+                    padding: "clamp(13px,3vw,17px) 0",
+                    minWidth: 0,
                   }}
                 />
                 {id && (
@@ -325,7 +305,7 @@ export default function HomePage() {
                       padding: "6px",
                       color: "#48484a",
                       lineHeight: 0,
-                      transition: "color 0.15s",
+                      flexShrink: 0,
                     }}
                     onMouseEnter={(e) =>
                       (e.currentTarget.style.color = "#a1a1a6")
@@ -335,8 +315,8 @@ export default function HomePage() {
                     }
                   >
                     <svg
-                      width="15"
-                      height="15"
+                      width="14"
+                      height="14"
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
@@ -349,20 +329,20 @@ export default function HomePage() {
                 <button
                   onClick={handleSubmit}
                   style={{
-                    margin: "5px",
-                    padding: "13px 26px",
-                    borderRadius: "16px", // ← more curved
+                    margin: "4px",
+                    padding: "clamp(10px,2vw,13px) clamp(14px,3vw,22px)",
+                    borderRadius: "16px",
                     background: "#2997ff",
                     border: "none",
                     cursor: "pointer",
                     color: "#fff",
                     fontWeight: 700,
-                    fontSize: "0.875rem",
-                    fontFamily: "var(--font-body)",
-                    letterSpacing: "-0.01em",
+                    fontSize: "clamp(0.78rem,2vw,0.875rem)",
+                    fontFamily: "var(--font-display)",
                     whiteSpace: "nowrap",
-                    transition: "background 0.15s, transform 0.1s",
+                    flexShrink: 0,
                     boxShadow: "0 4px 20px rgba(41,151,255,0.35)",
+                    transition: "background 0.15s, transform 0.1s",
                   }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.background = "#0a84ff")
@@ -385,9 +365,9 @@ export default function HomePage() {
             {error && (
               <div
                 style={{
-                  marginTop: "12px",
-                  padding: "11px 16px",
-                  borderRadius: "14px",
+                  marginTop: "10px",
+                  padding: "10px 14px",
+                  borderRadius: "12px",
                   background: "rgba(255,69,58,0.08)",
                   border: "1px solid rgba(255,69,58,0.2)",
                   display: "flex",
@@ -395,12 +375,18 @@ export default function HomePage() {
                   gap: "8px",
                 }}
               >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="#ff453a">
+                <svg
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="#ff453a"
+                  style={{ flexShrink: 0 }}
+                >
                   <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
                 </svg>
                 <span
                   style={{
-                    fontSize: "0.8rem",
+                    fontSize: "0.78rem",
                     color: "#ff453a",
                     fontWeight: 500,
                   }}
@@ -409,26 +395,18 @@ export default function HomePage() {
                 </span>
               </div>
             )}
-
             <p
               style={{
-                marginTop: "12px",
-                fontSize: "0.75rem",
+                marginTop: "9px",
+                fontSize: "0.72rem",
                 color: "#48484a",
-                letterSpacing: "0.02em",
               }}
             >
               Format:{" "}
-              <code
-                style={{
-                  fontFamily: "monospace",
-                  color: "#636366",
-                  fontStyle: "normal",
-                }}
-              >
+              <code style={{ fontFamily: "monospace", color: "#636366" }}>
                 tt
               </code>{" "}
-              followed by 7–8 digits
+              + 7–8 digits
             </p>
           </div>
 
@@ -439,18 +417,13 @@ export default function HomePage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "8px",
+              gap: "6px",
               flexWrap: "wrap",
-              marginTop: "28px",
+              marginTop: "20px",
             }}
           >
             <span
-              style={{
-                fontSize: "0.72rem",
-                color: "#3a3a3c",
-                fontWeight: 500,
-                marginRight: "4px",
-              }}
+              style={{ fontSize: "0.7rem", color: "#3a3a3c", fontWeight: 500 }}
             >
               Try →
             </span>
@@ -469,7 +442,7 @@ export default function HomePage() {
 
         {/* Divider */}
         <div
-          style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 28px" }}
+          style={{ maxWidth: "1120px", margin: "0 auto", padding: "0 20px" }}
         >
           <div
             style={{ height: "1px", background: "rgba(255,255,255,0.06)" }}
@@ -481,21 +454,24 @@ export default function HomePage() {
           style={{
             maxWidth: "1120px",
             margin: "0 auto",
-            padding: "80px 28px 100px",
+            padding: "clamp(48px,7vw,80px) 20px clamp(60px,9vw,100px)",
           }}
         >
           <div
             className="anim-fadeUp d-2"
-            style={{ textAlign: "center", marginBottom: "60px" }}
+            style={{
+              textAlign: "center",
+              marginBottom: "clamp(36px,5vw,56px)",
+            }}
           >
             <p
               style={{
-                fontSize: "0.72rem",
+                fontSize: "0.68rem",
                 fontWeight: 600,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
                 color: "#48484a",
-                marginBottom: "12px",
+                marginBottom: "10px",
               }}
             >
               How it works
@@ -504,22 +480,20 @@ export default function HomePage() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontWeight: 800,
-                fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
+                fontSize: "clamp(1.5rem,4vw,2.4rem)",
                 color: "#f5f5f7",
                 letterSpacing: "-0.03em",
-                fontStyle: "normal",
               }}
             >
               Intelligence at every frame.
             </h2>
           </div>
-
-          {/* Cards grid — each card is individually bordered now */}
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: "16px", // ← gap instead of 1px border trick
+              gridTemplateColumns:
+                "repeat(auto-fit,minmax(min(260px,100%),1fr))",
+              gap: "14px",
             }}
           >
             {FEATURES.map((f, i) => (
@@ -528,7 +502,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );
@@ -542,7 +515,7 @@ function QuickPill({ label, onClick }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        padding: "6px 16px",
+        padding: "5px 12px",
         borderRadius: "980px",
         cursor: "pointer",
         background: hov ? "rgba(41,151,255,0.1)" : "rgba(255,255,255,0.04)",
@@ -550,9 +523,9 @@ function QuickPill({ label, onClick }) {
           ? "1px solid rgba(41,151,255,0.3)"
           : "1px solid rgba(255,255,255,0.07)",
         color: hov ? "#2997ff" : "#6e6e73",
-        fontSize: "0.76rem",
+        fontSize: "0.74rem",
         fontWeight: 500,
-        fontFamily: "var(--font-body)",
+        fontFamily: "var(--font-display)",
         transition: "all 0.15s",
       }}
     >
@@ -568,15 +541,14 @@ function FeatureCard({ num, title, desc, icon }) {
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        padding: "36px 32px",
+        padding: "clamp(24px,4vw,36px) clamp(20px,3.5vw,30px)",
         borderRadius: "20px",
         background: hov ? "#0d0d0d" : "#0a0a0a",
         border: hov
           ? "1px solid rgba(41,151,255,0.3)"
           : "1px solid rgba(255,255,255,0.1)",
-        transition: "background 0.3s, border-color 0.3s, transform 0.3s",
+        transition: "background 0.3s,border-color 0.3s,transform 0.3s",
         transform: hov ? "translateY(-4px)" : "translateY(0)",
-        cursor: "default",
       }}
     >
       <div
@@ -584,12 +556,12 @@ function FeatureCard({ num, title, desc, icon }) {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
-          marginBottom: "28px",
+          marginBottom: "22px",
         }}
       >
         <span
           style={{
-            fontSize: "0.65rem",
+            fontSize: "0.62rem",
             fontWeight: 700,
             letterSpacing: "0.12em",
             color: "#3a3a3c",
@@ -599,8 +571,8 @@ function FeatureCard({ num, title, desc, icon }) {
         </span>
         <div
           style={{
-            padding: "10px",
-            borderRadius: "14px",
+            padding: "9px",
+            borderRadius: "13px",
             background: hov
               ? "rgba(41,151,255,0.12)"
               : "rgba(255,255,255,0.05)",
@@ -611,37 +583,24 @@ function FeatureCard({ num, title, desc, icon }) {
           {icon}
         </div>
       </div>
-
       <h3
         style={{
-          fontFamily: "var(--font-body)",
           fontWeight: 700,
-          fontSize: "1rem",
+          fontSize: "0.95rem",
           letterSpacing: "-0.02em",
-          marginBottom: "10px",
-          fontStyle: "normal",
+          marginBottom: "8px",
           color: hov ? "#2997ff" : "#f5f5f7",
           transition: "color 0.2s",
         }}
       >
         {title}
       </h3>
-
-      <p
-        style={{
-          fontSize: "0.85rem",
-          color: "#48484a",
-          lineHeight: 1.7,
-          fontWeight: 400,
-          fontStyle: "normal",
-        }}
-      >
+      <p style={{ fontSize: "0.83rem", color: "#48484a", lineHeight: 1.7 }}>
         {desc}
       </p>
-
       <div
         style={{
-          marginTop: "28px",
+          marginTop: "22px",
           height: "1px",
           background: hov ? "rgba(41,151,255,0.35)" : "rgba(255,255,255,0.05)",
           transition: "background 0.3s",
