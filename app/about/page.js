@@ -91,10 +91,10 @@ export default function AboutPage() {
                 lineHeight: 1.8,
               }}
             >
-              CineVox is an AI-powered movie sentiment engine built as a Brew
-              full-stack developer internship assignment. Enter any IMDb ID and
-              the app instantly surfaces how audiences truly responded to a
-              film.
+              CineVox is an AI-powered movie sentiment engine that decodes how
+              audiences truly feel about any film. Paste any IMDb ID and get a
+              deep sentiment breakdown — powered by the world's fastest AI
+              inference.
             </p>
             <p
               style={{
